@@ -1,0 +1,94 @@
+<div>
+  Script : {{ script }}
+</div>
+<div>
+  Device : {{ device }}  ( {{ udid }} )
+</div>
+<div>
+  Start Time : {{ start }}
+</div>
+<div>
+  End Time : {{ end }}
+</div>
+<div>
+  Status : {{ status }}
+</div>
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- DateTime Column -->
+    <ng-container matColumnDef="datetime">
+      <mat-header-cell fxFlex="10" *matHeaderCellDef> Date Time </mat-header-cell>
+      <mat-cell fxFlex="10" *matCellDef="let element">{{element.datetime}} </mat-cell>
+    </ng-container>
+
+    <!-- logtype Column -->
+    <ng-container matColumnDef="logtype">
+      <mat-header-cell fxFlex="10" *matHeaderCellDef> Log Type</mat-header-cell>
+      <mat-cell  fxFlex="10" *matCellDef="let element"> {{element.logtype}} </mat-cell>
+    </ng-container>
+
+    <!-- logkeys Column -->
+    <ng-container matColumnDef="logkeys">
+      <mat-header-cell fxFlex="60" *matHeaderCellDef> Log Keys </mat-header-cell>
+      <mat-cell fxFlex="60" *matCellDef="let element">
+        <div *ngIf="element.logtype !== 'screenshot'">
+          <div class="elem"  *ngFor="let item of element.logkeys; let i = index">
+            <div class="elem" *ngIf="item !== 'type' && item !== 'WebElement' && !item.includes('Stack')">
+              {{item}} : {{element.logjson[item]}}
+            </div>
+
+          </div>
+
+          <mat-chip-list aria-orientation="vertical">
+            <mat-chip *ngFor="let item of element.stackkeys; let i = index">
+              {{item}} : {{element.logjson[item]}}
+            </mat-chip>
+          </mat-chip-list>
+<!--          <div *ngFor="let item of element.stackkeys; let i = index">-->
+<!--            <div *ngIf="item !== 'type' && item !== 'WebElement'  ">-->
+<!--              {{item}} : {{element.logjson[item]}}-->
+<!--            </div>-->
+
+<!--          </div>-->
+        </div>
+
+      </mat-cell>
+    </ng-container>
+
+    <!-- screenshot Column -->
+    <ng-container matColumnDef="screenshot">
+      <mat-header-cell fxFlex="20" *matHeaderCellDef> Screen shot </mat-header-cell>
+      <mat-cell fxFlex="20" *matCellDef="let element">
+        <div *ngIf="element.logtype === 'screenshot'">
+
+          <div class="ex1"><a href="{{ element.logjson['imgsrc'] }}"><img src="{{ element.logjson['imgsrc'] }}" /></a></div>
+
+
+
+        </div>
+
+
+
+      </mat-cell>
+    </ng-container>
+
+
+
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator
+                 [pageSize]="20"
+                 [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>
+
+
+

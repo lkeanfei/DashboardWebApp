@@ -1,0 +1,25 @@
+
+
+.viewbutton {
+
+  margin-top: 25px;
+}
+
+.parentbutton
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mat-row {
+  min-height: 16px;
+}
+
+.selection {
+  width : 20%;
+  margin: 25px auto;
+}
+
+
+

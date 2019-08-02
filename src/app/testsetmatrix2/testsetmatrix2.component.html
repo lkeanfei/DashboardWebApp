@@ -1,0 +1,47 @@
+<p-table #dt [columns]="cols" [value]="rows" selectionMode="multiple" [(selection)]="selectedResults">
+
+  <ng-template pTemplate="caption">
+    Test Set - {{testsetid}}
+    <div class="ui-helper-clearfix">
+      <button type="button" pButton icon="fa fa-file-o" iconPos="left" label="All Data" (click)="dt.exportCSV()" style="float:left"></button>
+      <button type="button" pButton icon="fa fa-file" iconPos="left" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})" style="float:right"></button>
+
+    </div>
+
+  </ng-template>
+
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of cols">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-row let-columns="cols">
+    <tr [pSelectableRow] = "row">
+      <td *ngFor="let col of cols" [ngStyle]="{'background-color': getColor(row[col.field])}">
+        <span *ngIf="col.field == 'script_name'" >{{row[col.field]}}</span>
+        <span *ngIf="col.field != 'script_name'" >
+          <p *ngIf="row[col.field+'_passOnData'] !== undefined"><a [routerLink]="['/localrunreport' , row[col.field+'_passOnData']['sessionId']]">{{row[col.field]}}</a></p>
+          <p *ngIf="row[col.field+'_passOnData'] === undefined"> ERROR </p>
+        </span>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="summary">
+    <p> Stats : {{summary['passed']}} Passed tests, {{summary['failed']}} Failed tests and {{summary['error']}} errors.
+      <a  [routerLink]="['/testset_analytics',testsetid]"><button type="button" pButton icon="fa fa-bar-chart" iconPos="left" label="Analytics" style="float:right"></button></a>
+    </p>
+  </ng-template>
+
+</p-table>
+
+<!--<ng-progress-->
+<!--  [positionUsing]="'marginLeft'"-->
+<!--  [direction]="'leftToRightIncreased'"-->
+<!--  [color]="'#4286f4'"-->
+<!--  [trickleSpeed]="500"-->
+<!--  [thick]="true"-->
+<!--  [ease]="'easeInSine'"-->
+<!--&gt;</ng-progress>-->

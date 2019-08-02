@@ -1,0 +1,62 @@
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Testset ID Column -->
+    <ng-container matColumnDef="testsetid">
+      <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+      <mat-cell *matCellDef="let element"><a [routerLink]="['/testsetmatrix2' , element.testsetid]"> {{element.testsetid}} </a></mat-cell>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="desc">
+      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.desc}} </mat-cell>
+    </ng-container>
+
+    <!-- Start Time Column -->
+    <ng-container matColumnDef="starttime">
+      <mat-header-cell *matHeaderCellDef> Start Time </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.starttime}} </mat-cell>
+    </ng-container>
+
+    <!-- End Time Column -->
+    <ng-container matColumnDef="endtime">
+      <mat-header-cell *matHeaderCellDef> End Time </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.endtime}} </mat-cell>
+    </ng-container>
+
+    <!-- Pass Count Column -->
+    <ng-container matColumnDef="passCount">
+      <mat-header-cell *matHeaderCellDef> Pass Count </mat-header-cell>
+      <mat-cell *matCellDef="let element">  {{element.passCount}} </mat-cell>
+    </ng-container>
+
+    <!-- Failure Count Column -->
+    <ng-container matColumnDef="failureCount">
+      <mat-header-cell *matHeaderCellDef> Failure Count </mat-header-cell>
+      <mat-cell *matCellDef="let element">  {{element.failureCount}} </mat-cell>
+    </ng-container>
+
+    <!-- Assertion Failures Column -->
+    <ng-container matColumnDef="assertErrCount">
+      <mat-header-cell *matHeaderCellDef> Assertion Failures </mat-header-cell>
+      <mat-cell *matCellDef="let element">   {{element.assertErrCount}} </mat-cell>
+    </ng-container>
+
+    <!-- Non Assertion Failures Column -->
+    <ng-container matColumnDef="nonAssertErrCount">
+      <mat-header-cell *matHeaderCellDef> Non-Assertion Failures </mat-header-cell>
+      <mat-cell *matCellDef="let element">  {{element.nonAssertErrCount}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator
+                 [pageSize]="20"
+                 [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>
